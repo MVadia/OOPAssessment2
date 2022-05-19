@@ -1,40 +1,76 @@
-﻿using System;
-
-
-
-
+using System;              
+                           
+                      
 
 namespace AssessmentCode
 {
     class Program
     {
-        static void Main(string[] args)
+
+        public static void Main(string[] args = null)
         {
-            int dice_one = 0;
-            int dice_two = 0;
-            int dice_three = 0;
-            int dice_four = 0;
-            int dice_five = 0;
+            int numberOfPlayers = 2;
+            Dictionary<string, int> players;
 
-            choosePlayers c = new choosePlayers();
-            int numberOfPlayers = c.playerChoice();
+            die d = new die();
+            dieCount dc = new dieCount();
+            scoring scores = new scoring();
 
 
-            newPlayer p = new newPlayer();
-            for (int i =0; i < numberOfPlayers; i++ )
+
+            PlayerData enterName = new PlayerData();
+            players = enterName.playerEntry(numberOfPlayers);
+
+            int[] count = new int [5];
+
+            // for (int i = 0; i < numberOfPlayers; i++ )
+            // {
+            //     count = dc.saveDieCount();
+            // }
+
+
+
+            bool validInput = false;
+            Console.WriteLine("Which player would like to roll first? Enter 1 or 2: ");
+            do
             {
-                Console.WriteLine("Enter name for player "+i);
-                p.name = Console.ReadLine();
-                Console.WriteLine(string.Format("Player"+i+ ": Name = {0}", p.name));
-            }
+                try
+                {
+                    int currentPlayer = Convert.ToInt32(Console.ReadLine());
+                    currentPlayer = currentPlayer - 1;
+
+                    if (currentPlayer == 0)
+                    {
+                        validInput = true;
+                        count = dc.saveDieCount();
+                        scores.calcScores(count, players, currentPlayer);
+                        break;
+                    }
+                    if (currentPlayer == 1)
+                    {
+                        validInput = true;
+                        count = dc.saveDieCount();
+                        scores.calcScores(count, players, currentPlayer);
+                        break;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter 1 or 2 only. ");
+                        validInput= false;
+                    }
+                }catch
+                {
+                    Console.WriteLine("Enter an integer only. ");
+                    validInput = false;
+                }
+            }while(validInput == false);
 
 
-
-
-
-            
 
 
         }
+
+        
     }
 }
