@@ -14,40 +14,57 @@ namespace AssessmentCode
     {
         
     }
-    class choosePlayers
+
+
+    class PlayerData
     {
-        public int playerChoice ()
+
+        public Dictionary<string, int> playerEntry (int numberOfPlayers)
         {
-            int numberOfPlayers = 0;
-            Console.WriteLine("Enter number of players (2-5): ");
+            Dictionary<string, int> playerData = new Dictionary<string, int>();
+            newPlayer p = new newPlayer();
+
             bool validEntry = false;
-            do
+            for (int i = 0; i < numberOfPlayers; i++)
             {
-                try
+                Console.WriteLine("Enter username for player "+i+1);
+                do
                 {
-                     int input = Convert.ToInt32(Console.ReadLine());
-                     if (input <= 5 && input >=2)
-                     {
-                         numberOfPlayers = input;
-                         validEntry = true;
-                         return numberOfPlayers;
-                     } 
-                     else
-                     {
-                         Console.WriteLine("Value must be between 2 and 5 (inclusive)");
-                         validEntry = false;
-                     }
-                }
-                catch (System.Exception)
-                {
-                    Console.WriteLine("Invalid Input, Re-Enter");
-                }
-                
-            } while (validEntry == false);
-            return 0;
-        }
+                    try
+                    {
+                         string name = Console.ReadLine();
+                         if (name.Length >= 2)
+                         {
+                             p.name = name;
+                             playerData.Add(name, 0);
+                             validEntry = true;
+                             break;
+                         }
+                         else
+                         {
+                             Console.WriteLine("Name must be more than 2 letters in length.");
+                             validEntry = false;
+                         }
+                    }
+                    catch (System.Exception)
+                    {
+                        Console.WriteLine("Name already used. Please try again.");
+                        validEntry = false;
+                        
+                    }
+                } while (validEntry == false);
+
+            }
+
+            return playerData;
+        } 
+
+
 
 
     }
 }
+
+
+
 
